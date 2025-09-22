@@ -1,5 +1,10 @@
 #pragma once
-#define SOFTWARE_SERIAL_PORT Serial1;
+
+#include <cstdint>
+#include <Arduino.h>
+
+#define SOFTWARE_SERIAL_PORT Serial1
+#define RX_BUF_SIZE 1024 // bytes
 
 namespace SoftwareSerial {
     struct StepperPositionCommand{
@@ -21,7 +26,7 @@ namespace SoftwareSerial {
         double y;
     };
 
-    void init();
+    void init(uint64_t b);
 
     void poll(); //read from message buffer & process
 

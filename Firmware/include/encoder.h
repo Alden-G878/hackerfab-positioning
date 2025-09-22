@@ -12,5 +12,4 @@ namespace enc {
     void init(uint32_t p0, uint32_t p1, uint64_t steps_per_rev, bool ccw_pos); // attach pin interrupts to p0, p1 that inc & dec based on state machine
     void reset(); // sets current position to 0
     int64_t get_pos(); // reads value that pin interrupt has calculated
-
 }
