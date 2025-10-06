@@ -5,7 +5,7 @@ namespace SoftwareSerial {
     StepperPositionCommand step_pos_c;
     PiezoPositionCommand piez_pos_c;
 
-    void process_gcode(char *s) {
+    void process_gcode(int8_t *s) {
         // structure should be T X Y Z
         //      if T is 'P', X, Y, Z will be interpreted as a stepper pos command
         //      if T is 'S', X, Y will be interpreted as a piezo pos command, Z disregarded
@@ -17,7 +17,7 @@ namespace SoftwareSerial {
         double temp;
         step_pos_c.x = temp;
         step_pos_c.y = temp;
-        stemp_pos_c.z = temp;
+        step_pos_c.z = temp;
     }
 
     void process_piezo(char *s) {
@@ -40,7 +40,7 @@ namespace SoftwareSerial {
             temp_buf[i] = c;
             if(c=='\n') {
                 temp_buf[i] = '\0';
-                process_gcode(&temp_buf);
+                process_gcode(&(temp_buf[0]));
                 i=0;
                 break;
             }
@@ -54,7 +54,7 @@ namespace SoftwareSerial {
     }
 
     void getPiezoPositionCommand(PiezoPositionCommand *p) {
-        memcpy(p, &step_piez_c, sizeof(step_piez_c));
+        memcpy(p, &piez_pos_c, sizeof(piez_pos_c));
     }
     void sendStepperPosition(StepperPosition *s) {
         // unimplemented as of now
