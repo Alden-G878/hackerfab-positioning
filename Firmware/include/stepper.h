@@ -18,5 +18,6 @@ namespace step_dir { // may change to interrupt driven system later
 
 namespace positioning {
     void init(uint64_t steps_per_rev, uint64_t rev_per_mm, bool ccw_pos);
-    int64_t transform(int64_t m); // m in millimeters, if right_pos then ccw is true when m>0
+    int64_t transform_mm_2_step(int64_t m); // m in millimeters, if right_pos then ccw is true when m>0
+    double transform_step_2_mm(uint64_t s);
 }

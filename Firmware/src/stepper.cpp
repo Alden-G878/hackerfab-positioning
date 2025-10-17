@@ -60,9 +60,11 @@ namespace positioning
         rev_per_mm = rev_per_mm_;
         ccw_pos = ccw_pos_;
     }
-    int64_t transform(int64_t m){
+    int64_t transform_mm_2_step(int64_t m){
         bool m_pos = m>0;
-        int64_t num_mpos = m*rev_per_mm*steps_per_rev;
-        int64_t num_mneg = m*rev_per_mm*steps_per_rev;
+        return m*rev_per_mm*steps_per_rev;
+    }
+    double transform_step_2_mm(uint64_t s) {
+        return (double)s/(double)(steps_per_rev*rev_per_mm);
     }
 }
