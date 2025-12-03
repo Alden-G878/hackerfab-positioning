@@ -15,6 +15,7 @@ namespace SoftwareSerial {
     struct PiezoPositionCommand {
         double x;
         double y;
+        double z;
     };
     struct StepperPosition{
         double x;
@@ -24,6 +25,13 @@ namespace SoftwareSerial {
     struct PiezoCommanded{
         double x;
         double y;
+    };
+
+    enum command_type : uint8_t {
+        movement,
+        zero,
+        resolution_set,
+        ERROR
     };
 
     void init(uint64_t b);
