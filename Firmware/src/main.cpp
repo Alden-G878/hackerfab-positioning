@@ -55,7 +55,10 @@ void setup() {
     /*
         Need to assign each piezo to a channel and write down which channel is which piezo
     */
-    piezo_system::init(c);
+    c[0] = 0; // x
+    c[1] = 1; // y
+    c[2] = 2; // z
+    piezo_system::init(c, PIEZO_RST_PIN, PIEZO_SYNC_PIN);
 
     SoftwareSerial::init(SOFTWARE_SERIAL_BAUD);
 
