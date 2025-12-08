@@ -21,15 +21,6 @@ namespace enc
     volatile int64_t pos_steps_x;
     volatile int64_t pos_steps_y;
     volatile int64_t pos_steps_z;
-    void handle_fsm_x() {
-        handle_fsm(&state_x, &prev_state_x, &pL_x, &pR_x, &pos_steps_x);
-    }
-    void handle_fsm_y() {
-        handle_fsm(&state_y, &prev_state_y, &pL_y, &pR_y, &pos_steps_y);
-    }
-    void handle_fsm_z() {
-        handle_fsm(&state_z, &prev_state_z, &pL_z, &pR_z, &pos_steps_z);
-    }
     void handle_fsm(volatile quad_state *state, volatile quad_state *prev_state, uint8_t *pL, uint8_t *pR, volatile int64_t *pos_steps) {
         bool l = digitalRead(*pL);
         bool r = digitalRead(*pR);
@@ -99,6 +90,15 @@ namespace enc
             break;
         }
     }
+    void handle_fsm_x() {
+        handle_fsm(&state_x, &prev_state_x, &pL_x, &pR_x, &pos_steps_x);
+    }
+    void handle_fsm_y() {
+        handle_fsm(&state_y, &prev_state_y, &pL_y, &pR_y, &pos_steps_y);
+    }
+    void handle_fsm_z() {
+        handle_fsm(&state_z, &prev_state_z, &pL_z, &pR_z, &pos_steps_z);
+    }
     void init(uint64_t steps_per_rev_, uint32_t um_per_rev_, bool ccw_pos_x_, bool ccw_pos_y_, bool ccw_pos_z_, uint8_t pL_x_, uint8_t pL_y_, uint8_t pL_z_, uint8_t pR_x_, uint8_t pR_y_, uint8_t pR_z_) {
         steps_per_rev = steps_per_rev_;
         um_per_rev = um_per_rev_;
@@ -123,7 +123,6 @@ namespace enc
         attachInterrupt(pR_y, &handle_fsm_y, CHANGE);
         attachInterrupt(pL_z, &handle_fsm_z, CHANGE);
         attachInterrupt(pR_z, &handle_fsm_z, CHANGE);
-        void *s = &handle_fsm;
     }
     void reset_x() {
         state_x = RESET;

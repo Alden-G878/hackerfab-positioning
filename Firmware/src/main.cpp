@@ -110,6 +110,13 @@ void loop() {
     Serial.printf("Stepper z error, um: %f\n",error_z);
 
     // command piezo
+    piezo_system::p->piezos[0]->voltage = 0;
+    piezo_system::p->piezos[1]->voltage = 0;
+    piezo_system::p->piezos[2]->voltage = 0;
+    for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {
+        piezo_system::command_voltage(i);
+    }
+
     piezo_system::p->piezos[0]->voltage = piezo_system::um_to_voltage(piezo_command.x, piezo_system::p->piezos[0]);
     piezo_system::p->piezos[1]->voltage = piezo_system::um_to_voltage(piezo_command.y, piezo_system::p->piezos[1]);
     piezo_system::p->piezos[2]->voltage = piezo_system::um_to_voltage(piezo_command.z, piezo_system::p->piezos[2]);
