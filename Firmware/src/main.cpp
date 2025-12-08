@@ -20,8 +20,14 @@
 // software serial defines
 #define SOFTWARE_SERIAL_BAUD 115200
 
+// stepper positioning defines
+#define STEPPER_POS_MICROSTEP_MULT 8
+#define STEPPER_POS_STEPS_PER_REV 200 * STEPPER_POS_MICROSTEP_MULT
+#define STEPPER_POS_REV_PER_UM -1
+#define STEPPER_POS_CCW_POS true
+
 // stepper step_dir defines
-#define STEPPER_SD_STEPS_PER_REV -1
+#define STEPPER_SD_STEPS_PER_REV 200 * STEPPER_POS_MICROSTEP_MULT
 #define STEPPER_SD_STEP_PIN_X 22
 #define STEPPER_SD_DIR_PIN_X 23
 #define STEPPER_SD_STEP_PIN_Y 20
@@ -31,12 +37,6 @@
 #define STEPPER_SD_CCW_POS_X true
 #define STEPPER_SD_CCW_POS_Y true
 #define STEPPER_SD_CCW_POS_Z true
-
-// stepper positioning defines
-#define STEPPER_POS_MICROSTEP_MULT 8
-#define STEPPER_POS_STEPS_PER_REV 200 * STEPPER_POS_MICROSTEP_MULT
-#define STEPPER_POS_REV_PER_UM -1
-#define STEPPER_POS_CCW_POS true
 
 // piezo defines
 #define PIEZO_RST_PIN 9
