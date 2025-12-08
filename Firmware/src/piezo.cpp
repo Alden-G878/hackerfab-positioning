@@ -11,15 +11,11 @@ namespace piezo_system {
         digitalWrite(rst_b, HIGH);
     }
 
-    void init(uint16_t *c, uint8_t rst_b_, uint8_t sclk_, uint8_t sync_b_, uint8_t din_) {
+    void init(uint16_t *c, uint8_t rst_b_, uint8_t sync_b_) {
         rst_b = rst_b_;
-        sclk = sclk_;
         sync_b = sync_b_;
-        din = din_;
         pinMode(rst_b, OUTPUT);
-        pinMode(sclk, OUTPUT);
         pinMode(sync_b, OUTPUT);
-        pinMode(din, OUTPUT);
         reset_dac();
         p = (piezo_system::piezo_group *)malloc(sizeof(p));
         for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {

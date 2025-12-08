@@ -28,7 +28,7 @@ namespace piezo_system {
 
     struct piezo_group *p;
 
-    void init(uint16_t *c); // may take as input configured voltage range
+    void init(uint16_t *c, uint8_t rst_b_, uint8_t sync_b_); // may take as input configured voltage range
 
     void command_voltage(uint16_t c); // read docs of DAC to figure out 
 

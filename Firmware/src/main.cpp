@@ -5,13 +5,13 @@
 #include "stepper.h"
 
 // encoder defines
-#define ENC_PL_0 -1
-#define ENC_PR_0 -1
-#define ENC_PL_1 -1
-#define ENC_PR_1 -1
-#define ENC_PL_2 -1
-#define ENC_PR_2 -1
-#define ENC_STEPS_PER_REV -1
+#define ENC_PL_0 33
+#define ENC_PR_0 34
+#define ENC_PL_1 35
+#define ENC_PR_1 36
+#define ENC_PL_2 37
+#define ENC_PR_2 38
+#define ENC_STEPS_PER_REV 4000
 #define ENC_UM_PER_REV 500
 #define ENC_CCW_POS_0 true
 #define ENC_CCW_POS_1 true
@@ -22,20 +22,25 @@
 
 // stepper step_dir defines
 #define STEPPER_SD_STEPS_PER_REV -1
-#define STEPPER_SD_STEP_PIN_X -1
-#define STEPPER_SD_DIR_PIN_X -1
-#define STEPPER_SD_STEP_PIN_Y -1
-#define STEPPER_SD_DIR_PIN_Y -1
-#define STEPPER_SD_STEP_PIN_Z -1
-#define STEPPER_SD_DIR_PIN_Z -1
+#define STEPPER_SD_STEP_PIN_X 22
+#define STEPPER_SD_DIR_PIN_X 23
+#define STEPPER_SD_STEP_PIN_Y 20
+#define STEPPER_SD_DIR_PIN_Y 21
+#define STEPPER_SD_STEP_PIN_Z 18
+#define STEPPER_SD_DIR_PIN_Z 19
 #define STEPPER_SD_CCW_POS_X true
 #define STEPPER_SD_CCW_POS_Y true
 #define STEPPER_SD_CCW_POS_Z true
 
 // stepper positioning defines
-#define STEPPER_POS_STEPS_PER_REV -1
+#define STEPPER_POS_MICROSTEP_MULT 8
+#define STEPPER_POS_STEPS_PER_REV 200 * STEPPER_POS_MICROSTEP_MULT
 #define STEPPER_POS_REV_PER_UM -1
 #define STEPPER_POS_CCW_POS true
+
+// piezo defines
+#define PIEZO_RST_PIN 9
+#define PIEZO_SYNC_PIN 8
 
 
 

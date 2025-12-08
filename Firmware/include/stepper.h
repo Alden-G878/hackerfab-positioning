@@ -2,8 +2,8 @@
 #include <cstdint>
 #include <Arduino.h>
 
-#define DIR_WAIT 10
-#define PUL_WAIT 10
+#define DIR_WAIT 1
+#define PUL_WAIT 2
 #define CW_DIR HIGH
 #define CCW_DIR LOW
 
