@@ -26,7 +26,7 @@ namespace piezo_system {
         struct piezo *piezos[PIEZO_GROUP_NUM];
     };
 
-    struct piezo_group *p;
+    //struct piezo_group *p;
 
     void init(uint16_t *c, uint8_t rst_b_, uint8_t sync_b_); // may take as input configured voltage range
 
@@ -35,4 +35,6 @@ namespace piezo_system {
     void reset_dac(); // sets voltages of all channels to zero
 
     double um_to_voltage(double um, piezo *p); // translate int32_t of nm displacement into voltage level
+
+    piezo_group *get_p();
 }
