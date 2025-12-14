@@ -16,8 +16,11 @@ namespace piezo_system {
     }
 
     void reset_dac() {
+        Serial.println("entering digitalWrite");
         digitalWrite(rst_b, HIGH);
+        Serial.println("entering delayMicros");
         delayMicroseconds(1);
+        Serial.println("exiting delayMicros");
         digitalWrite(rst_b, LOW);
         delayMicroseconds(1);
         digitalWrite(rst_b, HIGH);
@@ -28,14 +31,26 @@ namespace piezo_system {
         sync_b = sync_b_;
         pinMode(rst_b, OUTPUT);
         pinMode(sync_b, OUTPUT);
+        Serial.println("entering reset_dac");
         reset_dac();
+        Serial.println("allocating p");
         p = (piezo_system::piezo_group *)malloc(sizeof(p));
-        for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {
-            p->piezos[i] = (struct piezo *)malloc(sizeof(p->piezos[i]));
-            p->piezos[i]->channel = c[i];
-            p->piezos[i]->voltage = 0.0;
-            p->piezos[i]->displacment = 0;
-        }
+        Serial.println("setup piezo 0");
+        p->piezos[0] = (struct piezo *)malloc(sizeof(struct piezo));
+        p->piezos[0]->channel = c[0];
+        p->piezos[0]->voltage = 0.0;
+        p->piezos[0]->displacment = 0;
+        Serial.println("setup piezo 0");
+        p->piezos[1] = (struct piezo *)malloc(sizeof(struct piezo));
+        p->piezos[1]->channel = c[1];
+        p->piezos[1]->voltage = 0.0;
+        p->piezos[1]->displacment = 0;
+        Serial.println("setup piezo 0");
+        p->piezos[2] = (struct piezo *)malloc(sizeof(struct piezo));
+        p->piezos[2]->channel = c[2];
+        p->piezos[2]->voltage = 0.0;
+        p->piezos[2]->displacment = 0;
+        Serial.println("beginning SPI");
         SPI.begin();
     }
 
@@ -64,6 +79,7 @@ namespace piezo_system {
     }
 
     void command_voltage(uint16_t select) { // need to verify clock only runs when transferring data
+        digitalWrite(7, HIGH);
         struct piezo *piezo = p->piezos[select];
 
         uint8_t channel = piezo->channel;
@@ -90,5 +106,6 @@ namespace piezo_system {
         SPI.endTransaction();
         // delay a microsecond
         delayMicroseconds(1);
+        digitalWrite(7, LOW);
     }
 }

@@ -45,11 +45,16 @@
 
 
 void setup() {
+    pinMode(7, OUTPUT);
+    Serial.begin(115200);
+    Serial.println("beginning");
+    #ifdef nope
     // change encoders to be X, Y, Z
     enc::init(ENC_STEPS_PER_REV, ENC_UM_PER_REV, ENC_CCW_POS_0, ENC_CCW_POS_1, ENC_CCW_POS_2, ENC_PL_0, ENC_PL_1, ENC_PL_2, ENC_PR_0, ENC_PR_1, ENC_PR_2);
     enc::reset_x();
     enc::reset_y();
     enc::reset_z();
+    #endif
     
     uint16_t c[PIEZO_GROUP_NUM];
     /*
@@ -58,15 +63,21 @@ void setup() {
     c[0] = 0; // x
     c[1] = 1; // y
     c[2] = 2; // z
+    Serial.println("entering init");
     piezo_system::init(c, PIEZO_RST_PIN, PIEZO_SYNC_PIN);
-
+    Serial.println("exiting init");
+    digitalWrite(PIEZO_RST_PIN, HIGH);
+    digitalWrite(PIEZO_SYNC_PIN, HIGH);
+    #ifdef nope
     SoftwareSerial::init(SOFTWARE_SERIAL_BAUD);
 
     step_dir::init(STEPPER_SD_STEPS_PER_REV, STEPPER_SD_STEP_PIN_X, STEPPER_SD_DIR_PIN_X, STEPPER_SD_STEP_PIN_Y,STEPPER_SD_DIR_PIN_Y,STEPPER_SD_STEP_PIN_Z,STEPPER_SD_DIR_PIN_Z);
     positioning::init(STEPPER_POS_STEPS_PER_REV, STEPPER_POS_REV_PER_UM, STEPPER_POS_CCW_POS);
+    #endif
 }
 
 void loop() {
+    #ifdef nope
     // poll software serial
     SoftwareSerial::poll();
 
@@ -109,18 +120,21 @@ void loop() {
     Serial.printf("Stepper y error, um: %f\n",error_y);
     Serial.printf("Stepper z error, um: %f\n",error_z);
 
+    #endif
+
     // command piezo
+    Serial.println("Commanding zero");
     piezo_system::get_p()->piezos[0]->voltage = 0;
     piezo_system::get_p()->piezos[1]->voltage = 0;
     piezo_system::get_p()->piezos[2]->voltage = 0;
-    for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {
-        piezo_system::command_voltage(i);
-    }
+    piezo_system::command_voltage(1);
 
-    piezo_system::get_p()->piezos[0]->voltage = piezo_system::um_to_voltage(piezo_command.x, piezo_system::get_p()->piezos[0]);
-    piezo_system::get_p()->piezos[1]->voltage = piezo_system::um_to_voltage(piezo_command.y, piezo_system::get_p()->piezos[1]);
-    piezo_system::get_p()->piezos[2]->voltage = piezo_system::um_to_voltage(piezo_command.z, piezo_system::get_p()->piezos[2]);
-    for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {
-        piezo_system::command_voltage(i);
-    }
+    Serial.println("Commanding 50");    
+    piezo_system::get_p()->piezos[0]->voltage = 50.0;//piezo_system::um_to_voltage(piezo_command.x, piezo_system::get_p()->piezos[0]);
+    piezo_system::get_p()->piezos[1]->voltage = 50.0;//piezo_system::um_to_voltage(piezo_command.y, piezo_system::get_p()->piezos[1]);
+    piezo_system::get_p()->piezos[2]->voltage = 50.0;//piezo_system::um_to_voltage(piezo_command.z, piezo_system::get_p()->piezos[2]);
+    piezo_system::command_voltage(2);
+    //for(size_t i=0;i<PIEZO_GROUP_NUM;++i) {
+    //    piezo_system::command_voltage(i);
+    //}
 }
